@@ -8,6 +8,7 @@ from taxi.models import Car
 
 Driver = get_user_model()
 
+
 class LicenseValidationMixin:
     def clean_license_number(self):
         license_number = self.cleaned_data["license_number"]

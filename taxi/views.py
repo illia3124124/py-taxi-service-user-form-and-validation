@@ -71,7 +71,9 @@ class CarListView(LoginRequiredMixin, generic.ListView):
 class CarDetailView(LoginRequiredMixin, generic.DetailView):
     model = Car
     queryset = (
-        Car.objects.all().select_related("manufacturer").prefetch_related("drivers")
+        Car.objects.all()
+        .select_related("manufacturer")
+        .prefetch_related("drivers")
     )
 
 
@@ -105,7 +107,10 @@ class CarUpdateDriversListView(LoginRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("taxi:car-detail", kwargs={"pk": self.kwargs["pk"]})
+        return reverse_lazy(
+            "taxi:car-detail",
+            kwargs={"pk": self.kwargs["pk"]}
+        )
 
 
 class DriverListView(LoginRequiredMixin, generic.ListView):
