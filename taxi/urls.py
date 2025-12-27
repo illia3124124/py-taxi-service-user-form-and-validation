@@ -70,7 +70,7 @@ urlpatterns = [
     path(
         "cars/<int:pk>/updatedrivers/",
         CarUpdateDriversListView.as_view(),
-        name="update-car-drivers-list",
+        name="car-driver-update",
     ),
 ]
 
