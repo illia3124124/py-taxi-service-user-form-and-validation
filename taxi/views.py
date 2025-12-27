@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
 
 from .forms import (
     DriverCreationForm,
@@ -10,7 +11,10 @@ from .forms import (
     CarForm,
     CarUpdateDriversListForm,
 )
-from .models import Driver, Car, Manufacturer
+from .models import Car, Manufacturer
+
+
+Driver = get_user_model()
 
 
 @login_required
@@ -93,8 +97,7 @@ class CarUpdateDriversListView(LoginRequiredMixin, generic.UpdateView):
     form_class = CarUpdateDriversListForm
 
     def form_valid(self, form):
-        car = form.save(commit=False)
-        car.save()
+        car = self.object
         if not car.drivers.filter(pk=self.request.user.pk).exists():
             car.drivers.add(self.request.user)
         else:

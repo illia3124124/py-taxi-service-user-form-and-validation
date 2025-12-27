@@ -19,6 +19,7 @@ from .views import (
     CarUpdateDriversListView,
 )
 
+
 urlpatterns = [
     path("", index, name="index"),
     path(
